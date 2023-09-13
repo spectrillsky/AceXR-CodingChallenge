@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base class that can be used for networked zone interactions
+/// </summary>
 public class PlayerZone : MonoBehaviour
 {
     [SerializeField] List<PlayerController> players = new List<PlayerController>();

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3074288919668282737}
   - component: {fileID: 8554305733383298190}
   - component: {fileID: 1206325053}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SceneChangeZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ff9c1033c56ccf4494da69d74887c9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players: []
   DesiredScene:
     asset: {fileID: 102900000, guid: abb55075041fa3b42afe640c17eff6a1, type: 3}
     guid: abb55075041fa3b42afe640c17eff6a1

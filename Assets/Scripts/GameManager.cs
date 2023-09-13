@@ -12,9 +12,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchma
     public static GameManager Instance;
 
     #region Config
-    [SerializeField] GameObject sceneLoadingScreen;
     [SerializeField] GameObject playerPrefab;
+    //Move to settings
     public const string SCENE_PROP = "scene";
+    //Make public static accessor
     [SerializeField] private GameSettings settings;
     #endregion
 
@@ -24,7 +25,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchma
 
     #region State
     [SerializeField] PlayerController localPlayer;
-    [SerializeField] bool changingScenes = false;
     public Scene LocalScene => SceneManager.GetActiveScene();
     #endregion
 
@@ -46,16 +46,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchma
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.activeSceneChanged += OnSceneChanged;
 
-        //Invoke("Connect", 1);
         Connect();
     }
 
     #region Lobby Management
     void Connect()
     {
-        //PhotonNetwork.ConnectToRegion("us");
         PhotonNetwork.ConnectUsingSettings();
-        //PhotonNetwork.ConnectToBestCloudServer();
     }
 
     #endregion
@@ -65,7 +62,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchma
         if (!PhotonNetwork.IsMasterClient) return;
         
         SetRoomScene(sceneName);
-        changingScenes = true;
 
         PhotonNetwork.LoadLevel(sceneName);
     }
@@ -77,14 +73,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchma
 
     private void OnSceneChanged(Scene arg0, Scene arg1)
     {
-        //sceneLoadingScreen.SetActive(true);
         if(localPlayer)
             PhotonNetwork.Destroy(localPlayer.photonView);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        //sceneLoadingScreen.SetActive(false);
         SetPlayerScene(scene);
         CreatePlayer();
     }
@@ -113,12 +107,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchma
 
         if (AllPlayersLoaded())
         {
+            //For future, can be used to syncronize the beginning of new levels. Ex: Don't spawn or give control to users until everyone has loaded
         }
-    }
-
-    private void OnPlayerSynced(Player player)
-    {
-
     }
 
     private bool AllPlayersLoaded()

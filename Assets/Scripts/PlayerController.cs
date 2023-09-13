@@ -8,6 +8,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class PlayerController : MonoBehaviourPunCallbacks
 {
     #region Config
+    //Attributes be moved to a Player Config SO
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotateSpeed;
 
@@ -17,8 +18,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [SerializeField] Camera camera;
     #endregion
 
+    #region Constants
+    //We can create scriptable objects that can host data for buttons - actions - colors
+    //which is easily configurable in editor
 
-    //We can create scriptable objects that can map buttons to actions
     public enum ObjectColors
     {
         White,
@@ -34,8 +37,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {ObjectColors.Green, Color.green},
         {ObjectColors.Blue, Color.blue},
     };
-
-
+    #endregion
 
     void Start()
     {
@@ -65,11 +67,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     void Move()
     {
         var verticalValue = Input.GetAxis("XRI_Left_Primary2DAxis_Vertical");
-        var horizontalValue = Input.GetAxis("XRI_Left_Primary2DAxis_Horizontal");
-
         transform.position -= moveSpeed * verticalValue * Time.deltaTime * transform.forward;
+        
+        var horizontalValue = Input.GetAxis("XRI_Left_Primary2DAxis_Horizontal");
         transform.position += moveSpeed * horizontalValue * Time.deltaTime * transform.right;
-
     }
 
     void Rotate()
@@ -82,6 +83,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         if (!LevelManager.Instance.ColorInteractionsEnabled) return;
 
+        #region Buttons
+        // Old input system for initial implementation
         if (Input.GetButton("XRI_Left_PrimaryButton"))
         {
             ChangeColor(ObjectColors.Red);
@@ -98,6 +101,23 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             ChangeColor(ObjectColors.Green);
         }
+        else if (Input.GetButton("XRI_Left_TriggerButton"))
+        {
+            ChangeColor(ObjectColors.Green);
+        }
+        else if (Input.GetButton("XRI_Right_TriggerButton"))
+        {
+            ChangeColor(ObjectColors.Red);
+        }
+        else if (Input.GetButton("XRI_Left_GripButton"))
+        {
+            ChangeColor(ObjectColors.White);
+        }
+        else if (Input.GetButton("XRI_Right_GripButton"))
+        {
+            ChangeColor(ObjectColors.Blue);
+        }
+        #endregion
     }
 
     void ClearHand()
@@ -107,26 +127,29 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     void InitializeHand()
     {
-        if (!photonView.IsMine) return;
-
         ClearHand();
-        ObjectColors color = GetColor();
         handObject = Instantiate(LevelManager.Instance.HandObjectPrefab, handTransform).GetComponent<MeshRenderer>();
 
-        photonView.RPC(nameof(RPC_ChangeColor), RpcTarget.AllBuffered, color);
+        if (photonView.IsMine)
+        {
+            ObjectColors color = GetColor();
+            photonView.RPC(nameof(RPC_ChangeColor), RpcTarget.All, color);
+        }
+        else
+            RPC_ChangeColor(GetColor());
     }
 
     void ChangeColor(ObjectColors color)
     {
         if (!photonView.IsMine) return;
 
-
+        //Move this to an utility/extension class
         Hashtable props = new Hashtable();
         string sceneColorProp = $"{GameManager.Instance.LocalScene.name}Color";
         props[sceneColorProp] = color;
         photonView.Owner.SetCustomProperties(props);
         
-        photonView.RPC(nameof(RPC_ChangeColor), RpcTarget.AllBuffered, color);
+        photonView.RPC(nameof(RPC_ChangeColor), RpcTarget.All, color);
     }
 
     ObjectColors GetColor()
@@ -143,8 +166,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     void RPC_ChangeColor(ObjectColors objectColor)
     {
-        Debug.Log($"[Player][RPC] Change Color {objectColor}");
-        if(!handObject)
+        Debug.Log($"[RPC][Player] Change Color {objectColor}");
+        if (!handObject)
             handObject = Instantiate(LevelManager.Instance.HandObjectPrefab, handTransform).GetComponent<MeshRenderer>();
         Color color = ColorMap[objectColor];
         handObject.material.color = color;
