@@ -1,0 +1,18 @@
+{
+  "a73b0cac1a73cc346aaeb5f8dd0b53f1": "Assets/Photon/PhotonRealtime/Demos/DemoLoadBalancing/DemoLoadBalancing-Scene.unity",
+  "98efc37d6307844488eb3e4247dde7e9": "Assets/Photon/PhotonUnityNetworking/Demos/DemoAsteroids/Scenes/DemoAsteroids-GameScene.unity",
+  "c8a9d1312a49dc8488a9b32d83d659c7": "Assets/Photon/PhotonUnityNetworking/Demos/DemoAsteroids/Scenes/DemoAsteroids-LobbyScene.unity",
+  "7dfd47dc8b9484dd79d8636d8603a9e5": "Assets/Photon/PhotonUnityNetworking/Demos/DemoHub/DemoHub-Scene.unity",
+  "e1fad393017993c4893877b645062417": "Assets/Photon/PhotonUnityNetworking/Demos/DemoProcedural/Procedural-Scene.unity",
+  "711b38c07f2cf904f81b3422c67f1825": "Assets/Photon/PhotonUnityNetworking/Demos/DemoSlotRacer/SlotCar-Scene.unity",
+  "bff77b01b50254edbb6edeeaba5ae8b3": "Assets/Photon/PhotonUnityNetworking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Launcher.unity",
+  "9b8561c6e396849a5ba48c3eb9524049": "Assets/Photon/PhotonUnityNetworking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Room for 1.unity",
+  "764428c63577f4580af4ce54ca9f4b1b": "Assets/Photon/PhotonUnityNetworking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Room for 2.unity",
+  "e07afcca5bf1a41f5bd28f498656b7b8": "Assets/Photon/PhotonUnityNetworking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Room for 3.unity",
+  "e7a7f9734636d415ca84ef3aaf7680f6": "Assets/Photon/PhotonUnityNetworking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Room for 4.unity",
+  "9d6d60c803e244e51ba945a84b88757d": "Assets/Photon/PhotonUnityNetworking/Demos/PunCockpit/PunCockpit-Scene.unity",
+  "abb55075041fa3b42afe640c17eff6a1": "Assets/Scenes/CapsuleScene.unity",
+  "4364d285010f0d14fbd15c0f21aceada": "Assets/Scenes/CubeScene.unity",
+  "9fc0d4010bbf28b4594072e72b8655ab": "Assets/Scenes/Home.unity",
+  "89b708238bc1f40f29451cf2329913f7": "Packages/com.unity.learn.iet-framework/Tests/Editor/EmptyTestScene.unity"
+}
